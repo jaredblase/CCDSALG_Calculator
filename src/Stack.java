@@ -1,8 +1,20 @@
 public class Stack {
 	// Attributes
-	private int cap = 178;
+	private int cap;
 	private int top = 0;
-	private int[] myStack = new int[cap];
+	private int[] myStack;
+
+
+	// Constructors
+	public Stack() {
+		cap = 178;
+		myStack = new int[178];
+	}
+
+	public Stack(int max) {
+		cap = max;
+		myStack = new int[max];
+	}
 
 
 	// Methods
