@@ -9,13 +9,17 @@ public class Main {
         try (Scanner file = new Scanner(new File("infix.txt"))) {
             String input;
 
-            do {
-                input = file.nextLine();                        // read a line from the text file
+            input = file.nextLine(); // read a line from the text file
+            while (!input.equals("QUIT")) {
 
-                input = Infix.toPostfix(input);                 // convert input to postfix expression
-                System.out.println(input);
+                System.out.println(input);                      // show input
+                input = Infix.toPostfix(input);                 // convert infix to postfix expression
+                System.out.println(input);                      // show converted
                 System.out.println(Postfix.evaluate(input));    // output the evaluated postfix expression
-            } while (!input.equals("QUIT"));
+                System.out.println();
+
+                input = file.nextLine();                        // read next line from the text file
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
