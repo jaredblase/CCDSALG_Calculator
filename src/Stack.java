@@ -7,10 +7,6 @@ public class Stack {
 	private LinkedList<Integer> stack = new LinkedList<Integer>();
 
 
-	public void printTop() {
-		System.out.println("Cap: " + cap + " Top: " + top);
-	}
-
 	// Methods
 	public void push(int num) {
 		if(cap == top) {
