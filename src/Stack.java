@@ -1,26 +1,32 @@
 import java.util.LinkedList;
 
 public class Stack {
-
 	// Attributes
+	private int cap = 0;
 	private int top = 0; 
 	private LinkedList<Integer> stack = new LinkedList<Integer>();
 
 
-	// Methods
+	public void printTop() {
+		System.out.println("Cap: " + cap + " Top: " + top);
+	}
 
-	// Add Value to Stack
+	// Methods
 	public void push(int num) {
-		stack.add(num);
+		if(cap == top) {
+			stack.add(num);
+			cap++;
+		} else {
+			stack.set(top, num);
+		}
 		top++;
 	}
 
-	// Return Top Value of Stack
 	public int pop() {
-		return stack.get(--top);
+		top--;
+		return stack.get(top);
 	}
 
-	// Check Stack If it is Empty
 	public boolean isEmpty() {
 		return top == 0;
 	}
