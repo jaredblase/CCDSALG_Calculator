@@ -1,26 +1,39 @@
-import java.util.LinkedList;
-
 public class Queue {
 
 	// Attribute
-	private int cap = 0;
-	private LinkedList<Integer> queue = new LinkedList<Integer>();
+	private int cap;
+	private int head = 0;
+	private int tail = 0;
+	private int[] myQueue;
+
+	
+	// Constructors
+	public Queue() {
+		cap = 178;
+		myQueue = new int[cap];
+	}
+
+	public Queue(int max) {
+		cap = max;
+		myQueue = new int[max];
+	}
+
 
 	// Methods
 	public void enqueue(int num) {
-		queue.add(num);
-		cap++;
+		return myQueue[head++ % cap];
 	}
 
 	public int dequeue() {
-		int temp = queue.get(0);
-		queue.remove(0);
-		cap--;
-		return temp;
+		return myQueue[head++ % cap];
 	}
 
 	public boolean isEmpty() {
-		return cap == 0;
+		return head == tail;
+	}
+
+	public boolean isFull() {
+		return (tail + 1) % cap == head;
 	}
 
 }
