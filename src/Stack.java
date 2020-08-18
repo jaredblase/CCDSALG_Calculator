@@ -1,29 +1,36 @@
 public class Stack {
 	// Attributes
-	private int cap;
-	private int top = 0;
-	private int[] myStack;
+	private final int CAP;
+	private int top;
+	private final int[] myStack;
 
 
 	// Constructors
 	public Stack() {
-		cap = 178;
-		myStack = new int[178];
+		this(178);
 	}
 
 	public Stack(int max) {
-		cap = max;
+		CAP = max;
 		myStack = new int[max];
+		top = 0;
 	}
-
 
 	// Methods
 	public void push(int num) {
-		myStack[top++] = num;
+		if(!isFull()) {
+			myStack[top++] = num;
+		} else {
+			System.out.println("Stack is already full!");
+		}
 	}
 
 	public int pop() {
-		return myStack[--top];
+		if(!isEmpty()) {
+			return myStack[--top];
+		}
+		System.out.println("Stack is empty!");
+		return 0;
 	}
 
 	public boolean isEmpty() {
@@ -31,7 +38,7 @@ public class Stack {
 	}
 
 	public boolean isFull() {
-		return top == cap;
+		return top == CAP;
 	}
 
 }
