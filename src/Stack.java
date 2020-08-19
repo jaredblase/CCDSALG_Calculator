@@ -2,7 +2,7 @@ public class Stack {
 	// Attributes
 	private final int CAP;
 	private int top;
-	private final int[] myStack;
+	private final String[] myStack;
 
 
 	// Constructors
@@ -12,25 +12,29 @@ public class Stack {
 
 	public Stack(int max) {
 		CAP = max;
-		myStack = new int[max];
+		myStack = new String[max];
 		top = 0;
 	}
 
 	// Methods
-	public void push(int num) {
+	public void push(String op) {
 		if(!isFull()) {
-			myStack[top++] = num;
+			myStack[top++] = op;
 		} else {
 			System.out.println("Stack is already full!");
 		}
 	}
 
-	public int pop() {
+	public String pop() {
 		if(!isEmpty()) {
 			return myStack[--top];
 		}
 		System.out.println("Stack is empty!");
-		return 0;
+		return null;
+	}
+
+	public String topElem() {
+		return myStack[top - 1];
 	}
 
 	public boolean isEmpty() {
