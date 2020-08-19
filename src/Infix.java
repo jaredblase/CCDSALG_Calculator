@@ -1,7 +1,7 @@
 public class Infix {
     public static String toPostfix(String expression) {
         expression = processExpression(expression);
-        String[] tokens = expression.split("\\s");  // tokenize string with space as key
+        String[] tokens = expression.split("\\s+");  // tokenize string with space as key
 
         Stack opStack = new Stack();
         Queue postfix = new Queue();
@@ -21,7 +21,7 @@ public class Infix {
                     System.out.println("No left parenthesis found!");
                 }
             } else {
-                while(!opStack.isEmpty() && isGreaterPrecedence(opStack.topElem(), i)) {
+                while(!opStack.isEmpty() && test(opStack.topElem(), i)) {
                     postfix.enqueue(opStack.pop());
                 }
                 opStack.push(i);
@@ -53,11 +53,14 @@ public class Infix {
         expression = expression.replaceAll("[|]{2}", " || ");
         expression = expression.replaceAll("[&]{2}", " && ");
 
-        return expression;
+        return expression.trim(); // clean out excess spaces before and after the string
     }
 
-    private static boolean isGreaterPrecedence(String a, String b) {
-        return getPrecedenceLevel(a) > getPrecedenceLevel(b);
+    private static boolean test(String a, String b) {
+        int levelA = getPrecedenceLevel(a);
+        int levelB = getPrecedenceLevel(b);
+
+        return !a.equals("(") && (levelA > levelB || levelA == levelB && !b.equals("^"));
     }
 
     private static int getPrecedenceLevel(String c) {
