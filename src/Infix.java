@@ -1,21 +1,97 @@
 public class Infix {
     public static String toPostfix(String expression) {
-        Stack opStack = new Stack();
-        StringBuilder postfix = new StringBuilder();
+        expression = processExpression(expression);
+        String[] tokens = expression.split("\\s");  // tokenize string with space as key
 
-        // No concept of hierarchy yet
-        for(char i: expression.toCharArray()) {
-            if(Character.isDigit(i)) {
-                postfix.append(i);
+        Stack opStack = new Stack();
+        Queue postfix = new Queue();
+
+        for(String i: tokens) {
+            if(i.matches("[\\d]+")) {
+                postfix.enqueue(i);                       // add number to queue
+            } else if(i.equals("(")) {                    // if left parenthesis
+                opStack.push(i);
+            } else if(i.equals(")")) {                    // if right parenthesis
+                try {
+                    while(!opStack.topElem().equals("(")) {
+                        postfix.enqueue(opStack.pop());     // enqueue until left bracket found
+                    }
+                    opStack.pop();                          // discard left bracket from stack
+                } catch(Exception e) {
+                    System.out.println("No left parenthesis found!");
+                }
             } else {
-                postfix.append(" ");
+                while(!opStack.isEmpty() && isGreaterPrecedence(opStack.topElem(), i)) {
+                    postfix.enqueue(opStack.pop());
+                }
                 opStack.push(i);
             }
         }
 
         while(!opStack.isEmpty()) {
+            postfix.enqueue(opStack.pop());                     // pop the rest from the stack
+        }
+        return outputPostfix(postfix);
+    }
+
+    private static String processExpression(String expression) {
+        expression = expression.replaceAll("!=", " != ");
+        expression = expression.replaceAll("!", " ! ");
+        expression = expression.replaceAll("[(]", " ( ");
+        expression = expression.replaceAll("[)]", " ) ");
+        expression = expression.replaceAll("\\^", " ^ ");
+        expression = expression.replaceAll("\\*", " * ");
+        expression = expression.replaceAll("/", " / ");
+        expression = expression.replaceAll("%", " / ");
+        expression = expression.replaceAll("\\+", " + ");
+        expression = expression.replaceAll("-", " - ");
+        expression = expression.replaceAll("<", " < ");
+        expression = expression.replaceAll(">", " > ");
+        expression = expression.replaceAll(" < =", " <= ");
+        expression = expression.replaceAll(" > =", " >= ");
+        expression = expression.replaceAll("==", " == ");
+        expression = expression.replaceAll("[|]{2}", " || ");
+        expression = expression.replaceAll("[&]{2}", " && ");
+
+        return expression;
+    }
+
+    private static boolean isGreaterPrecedence(String a, String b) {
+        return getPrecedenceLevel(a) > getPrecedenceLevel(b);
+    }
+
+    private static int getPrecedenceLevel(String c) {
+        int n = 0;
+
+        // follows the C and Java operator precedence.
+        switch(c) {
+            case "!":
+                n++;
+            case "^":
+                n++;
+            case "*", "/", "%":
+                n++;
+            case "+", "-":
+                n++;
+            case ">", "<", "<=", ">=":
+                n++;
+            case "==", "!=":
+                n++;
+            case "&&":
+                n++;
+            case "||":
+                n++;
+        }
+
+        return n;
+    }
+
+    private static String outputPostfix(Queue expression) {
+        StringBuilder postfix = new StringBuilder();
+
+        while(!expression.isEmpty()) {
+            postfix.append(expression.dequeue());
             postfix.append(" ");
-            postfix.append(opStack.pop());
         }
 
         return postfix.toString();
