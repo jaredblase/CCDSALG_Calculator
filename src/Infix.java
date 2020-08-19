@@ -35,8 +35,8 @@ public class Infix {
     }
 
     private static String processExpression(String expression) {
-        expression = expression.replaceAll("!=", " != ");
         expression = expression.replaceAll("!", " ! ");
+        expression = expression.replaceAll(" ! =", " != ");
         expression = expression.replaceAll("[(]", " ( ");
         expression = expression.replaceAll("[)]", " ) ");
         expression = expression.replaceAll("\\^", " ^ ");
