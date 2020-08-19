@@ -1,31 +1,37 @@
 public class Queue {
-
 	// Attribute
-	private int cap;
-	private int head = 0;
-	private int tail = 0;
+	private final int CAP;
+	private int head;
+	private int tail;
 	private int[] myQueue;
 
 	
 	// Constructors
 	public Queue() {
-		cap = 178;
-		myQueue = new int[cap];
+		this(178);
 	}
 
 	public Queue(int max) {
-		cap = max;
+		CAP = max;
 		myQueue = new int[max];
+		head = tail = 0;
 	}
-
 
 	// Methods
 	public void enqueue(int num) {
-		myQueue[tail++ % cap] = num;
+		if(!isFull()) {
+			myQueue[tail++ % CAP] = num;
+		} else {
+			System.out.println("Queue is full!");
+		}
 	}
 
 	public int dequeue() {
-		return myQueue[head++ % cap];
+		if(!isEmpty()) {
+			return myQueue[head++ % CAP];
+		}
+		System.out.println("Queue is empty!");
+		return 0;
 	}
 
 	public boolean isEmpty() {
@@ -33,7 +39,7 @@ public class Queue {
 	}
 
 	public boolean isFull() {
-		return (tail + 1) % cap == head;
+		return (tail + 1) % CAP == head;
 	}
 
 }
