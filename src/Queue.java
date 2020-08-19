@@ -3,7 +3,7 @@ public class Queue {
 	private final int CAP;
 	private int head;
 	private int tail;
-	private int[] myQueue;
+	private final String[] myQueue;
 
 	
 	// Constructors
@@ -13,25 +13,25 @@ public class Queue {
 
 	public Queue(int max) {
 		CAP = max;
-		myQueue = new int[max];
+		myQueue = new String[max];
 		head = tail = 0;
 	}
 
 	// Methods
-	public void enqueue(int num) {
+	public void enqueue(String token) {
 		if(!isFull()) {
-			myQueue[tail++ % CAP] = num;
+			myQueue[tail++ % CAP] = token;
 		} else {
 			System.out.println("Queue is full!");
 		}
 	}
 
-	public int dequeue() {
+	public String dequeue() {
 		if(!isEmpty()) {
 			return myQueue[head++ % CAP];
 		}
 		System.out.println("Queue is empty!");
-		return 0;
+		return null;
 	}
 
 	public boolean isEmpty() {
@@ -41,5 +41,4 @@ public class Queue {
 	public boolean isFull() {
 		return (tail + 1) % CAP == head;
 	}
-
 }
