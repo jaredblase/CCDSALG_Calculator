@@ -1,35 +1,27 @@
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        String str;
         System.out.println("Calculator 101");
 
-        try (Scanner file = new Scanner(new File("TESTCASE.txt"))) {
-            String input;
-
-            input = file.nextLine();                                // read a line from the text file
-            while (!input.equals("QUIT")) {
-
-                System.out.println(input);                          // show input
-                try {
-                    input = Infix.toPostfix(input);                 // convert infix to postfix expression
-                    System.out.println(input);                      // show converted
-                    System.out.println(Postfix.evaluate(input));    // output the evaluated postfix expression
-                    System.out.println();
-                } catch (ArithmeticException e) {
-                    System.out.println("Error! Division by 0!");
-                } catch (Exception e) {
-                    System.out.println(e.toString());
-                    System.out.println();
-                }
-
-                input = file.nextLine();                        // read next line from the text file
+        str = input.nextLine();
+        while (!str.equals("QUIT")) {
+            System.out.println(input);                          // show input
+            try {
+                str = Infix.toPostfix(str);                 // convert infix to postfix expression
+                System.out.println(str);                      // show converted
+                System.out.println(Postfix.evaluate(str));    // output the evaluated postfix expression
+                System.out.println();
+            } catch (ArithmeticException e) {
+                System.out.println("Error! Division by 0!");
+            } catch (Exception e) {
+                System.out.println(e.toString());
+                System.out.println();
             }
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found!");
-            e.printStackTrace();
+
+            str = input.nextLine();
         }
 
         System.out.println("Terminating calculator...");
