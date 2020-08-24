@@ -34,7 +34,13 @@ public class Infix {
         while(!opStack.isEmpty()) {
             postfix.enqueue(opStack.pop());                 // pop the rest from the stack
         }
-        return outputPostfix(postfix);
+
+        expression = concatPostfix(postfix);                // concat queue elements into 1 String
+        if(expression.contains("(")) {
+            throw new Exception("No matching right parenthesis found!");
+        }
+
+        return expression;
     }
 
     /**
@@ -112,12 +118,12 @@ public class Infix {
     }
 
     /**
-     * Dequeues all tokens from the parameter and builds a String from them.
+     * Dequeues all tokens from the parameter and builds a single String from them.
      * Uses StringBuilder since Strings are immutable in Java.
      * @param expression a queue containing the tokens of the expression.
      * @return the combined form of the tokens.
      */
-    private static String outputPostfix(Queue expression) {
+    private static String concatPostfix(Queue expression) {
         StringBuilder postfix = new StringBuilder();
 
         while(!expression.isEmpty()) {
