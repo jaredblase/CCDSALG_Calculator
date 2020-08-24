@@ -8,7 +8,6 @@ public class Main {
 
         str = input.nextLine();
         while (!str.equals("QUIT")) {
-            System.out.println(input);                          // show input
             try {
                 str = Infix.toPostfix(str);                 // convert infix to postfix expression
                 System.out.println(str);                      // show converted
