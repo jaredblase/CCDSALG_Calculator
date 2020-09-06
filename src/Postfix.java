@@ -1,14 +1,15 @@
 public class Postfix {
     /**
-     * Evaluates a postfix expression
-     * @param exp the String postfix expression
-     * @return the evaluated number as a String
+     * Evaluates a postfix expression.
+     * @param tokens is a queue containing the tokens in postfix form
+     * @return the result from the evaluated expression.
      */
-    public static String evaluate(String exp) throws Exception {
+    public static int evaluate(Queue tokens) throws Exception {
         Stack stack = new Stack();
-        String[] tokens = exp.split("\\s+");                  // split into tokens
+        String s;
 
-        for(String s: tokens) {
+        while(!tokens.isEmpty()) {
+            s = tokens.dequeue();
             if (s.matches("[\\d]+"))                          // if it is a number
                 stack.push(s);                                      // push it to stack
             else {
@@ -22,7 +23,8 @@ public class Postfix {
                 }
             }
         }
-        return stack.pop();
+
+        return Integer.parseInt(stack.pop());
     }
 
     /**
