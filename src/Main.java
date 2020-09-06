@@ -8,6 +8,7 @@ public class Main {
 
         str = input.nextLine();
         while (!str.equals("QUIT")) {
+            System.out.println(str);
             try {
                 Queue tokens = Infix.toPostfix(str);         // convert infix to postfix expression
                 for(String t : tokens) {                     // display elements in the queue
