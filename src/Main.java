@@ -9,16 +9,18 @@ public class Main {
         str = input.nextLine();
         while (!str.equals("QUIT")) {
             try {
-                str = Infix.toPostfix(str);                 // convert infix to postfix expression
-                System.out.println(str);                      // show converted
-                System.out.println(Postfix.evaluate(str));    // output the evaluated postfix expression
+                Queue tokens = Infix.toPostfix(str);         // convert infix to postfix expression
+                for(String t : tokens) {                     // display elements in the queue
+                    System.out.print(t + " ");
+                }
                 System.out.println();
+                System.out.println(Postfix.evaluate(tokens));    // output the evaluated postfix expression
             } catch (ArithmeticException e) {
-                System.out.println("Error! Division by 0!");
+                System.out.println("Division by zero error!");
             } catch (Exception e) {
-                System.out.println(e.toString());
-                System.out.println();
+                System.out.println(e.getMessage());
             }
+            System.out.println();
 
             str = input.nextLine();
         }
