@@ -4,7 +4,7 @@ public class Postfix {
      * @param tokens is a queue containing the tokens in postfix form
      * @return the result from the evaluated expression.
      */
-    public static int evaluate(Queue tokens) throws Exception {
+    public static int evaluate(Queue tokens) {
         Stack stack = new Stack();
         String s;
 
