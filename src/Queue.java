@@ -1,4 +1,9 @@
-public class Queue {
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.Objects;
+import java.util.function.Predicate;
+
+public class Queue implements Iterable<String> {
 	// Attribute
 	private final int CAP;
 	private int head;
@@ -40,5 +45,29 @@ public class Queue {
 
 	public boolean isFull() {
 		return (tail + 1) % CAP == head;
+	}
+
+	public String head() {
+		if(!isEmpty()) {
+			return myQueue[head % CAP];
+		} else {
+			System.out.println("Queue is empty!");
+			return null;
+		}
+	}
+
+	public String tail() {
+		if(!isEmpty()) {
+			return myQueue[(tail - 1) % CAP];
+		} else {
+			System.out.println("Queue is empty!");
+			return null;
+		}
+	}
+
+	@Override
+	public Iterator<String> iterator() {
+		Predicate<String> filter = Objects::nonNull;
+		return Arrays.stream(myQueue).filter(filter).iterator();
 	}
 }
