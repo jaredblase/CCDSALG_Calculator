@@ -4,43 +4,41 @@ public class Infix {
      * @param expression the infix expression to be converted
      * @return the postfix equivalent of the parameter
      */
-    public static String toPostfix(String expression) throws Exception {
+    public static Queue toPostfix(String expression) throws Exception {
         String[] tokens = tokenizeExpression(expression);   // get tokens
         Stack opStack = new Stack();
         Queue postfix = new Queue();
 
-        for(String i: tokens) {
-            if(i.matches("[\\d]+")) {
+        for (String i : tokens) {
+            if (i.matches("[\\d]+")) {
                 postfix.enqueue(i);                         // add number to queue
-            } else if(i.equals("(")) {                      // if left parenthesis
+            } else if (i.equals("(")) {                      // if left parenthesis
                 opStack.push(i);
-            } else if(i.equals(")")) {                      // if right parenthesis
+            } else if (i.equals(")")) {                      // if right parenthesis
                 try {
-                    while(!opStack.topElem().equals("(")) {
+                    while (!opStack.top().equals("(")) {
                         postfix.enqueue(opStack.pop());     // enqueue until left bracket found
                     }
                     opStack.pop();                          // discard left bracket from stack
-                } catch(Exception e) {
+                } catch (Exception e) {
                     throw new Exception("No matching left parenthesis found!");
                 }
             } else {
-                while(!opStack.isEmpty() && test(opStack.topElem(), i)) {
+                while (!opStack.isEmpty() && test(opStack.top(), i)) {
                     postfix.enqueue(opStack.pop());
                 }
                 opStack.push(i);
             }
         }
 
-        while(!opStack.isEmpty()) {
-            postfix.enqueue(opStack.pop());                 // pop the rest from the stack
+        while (!opStack.isEmpty()) {                        // pop the rest from the stack
+            if(opStack.top().equals("(")) {
+                throw new Exception("No matching right parenthesis found!");
+            }
+            postfix.enqueue(opStack.pop());
         }
 
-        expression = concatPostfix(postfix);                // concat queue elements into 1 String
-        if(expression.contains("(")) {
-            throw new Exception("No matching right parenthesis found!");
-        }
-
-        return expression;
+        return postfix;
     }
 
     /**
@@ -115,22 +113,5 @@ public class Infix {
         }
 
         return n;
-    }
-
-    /**
-     * Dequeues all tokens from the parameter and builds a single String from them.
-     * Uses StringBuilder since Strings are immutable in Java.
-     * @param expression a queue containing the tokens of the expression.
-     * @return the combined form of the tokens.
-     */
-    private static String concatPostfix(Queue expression) {
-        StringBuilder postfix = new StringBuilder();
-
-        while(!expression.isEmpty()) {
-            postfix.append(expression.dequeue());                       // add token to the String
-            postfix.append(" ");                                        // add a space in between
-        }
-
-        return postfix.toString();                                      // return the String form
     }
 }
