@@ -33,7 +33,7 @@ public class Stack {
 		return null;
 	}
 
-	public String topElem() {
+	public String top() {
 		return myStack[top - 1];
 	}
 
