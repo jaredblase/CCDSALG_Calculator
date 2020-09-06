@@ -80,7 +80,7 @@ public class Infix {
         int levelA = getPrecedenceLevel(a);
         int levelB = getPrecedenceLevel(b);
                                                                         // right association exemption
-        return !a.equals("(") && (levelA > levelB || levelA == levelB && !b.equals("^"));
+        return !a.equals("(") && (levelA > levelB || levelA == levelB && !b.equals("^") && !b.equals("!") );
     }
 
     /**
