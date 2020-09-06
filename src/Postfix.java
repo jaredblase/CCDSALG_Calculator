@@ -36,14 +36,20 @@ public class Postfix {
      * @throws ArithmeticException if division by 0 occurs.
      * @throws IllegalStateException if an undefined operator is encountered.
      */
-    private static String compute(int x, int y, String operator) throws Exception {
+    private static String compute(int x, int y, String operator) throws ArithmeticException {
         return Integer.toString(switch(operator) {
             case "+" -> x + y;
             case "-" -> x - y;
             case "*" -> x * y;
-            case "/" -> x /y;
+            case "/" -> x / y;
             case "%" -> x % y;
-            case "^" -> (int) Math.pow(x, y);
+            case "^" -> {
+                if(x == 0 && y < 0) {
+                    throw new ArithmeticException();
+                } else {
+                    yield (int) Math.pow(x, y);
+                }
+            }
             default -> computeBool(x, y, operator)? 1 : 0;
         });
     }
